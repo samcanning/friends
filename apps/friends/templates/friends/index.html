@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Friends</title>
+</head>
+<body>
+    <p><a href='/logout'>Logout</a></p>
+    <h1>Hello, {{user.alias}}!</h1>
+    <!-- Displays friends list if user has any -->
+    {% if myfriends %}
+    <p>Here is the list of your friends:</p>
+    <table>
+        <tr>
+            <th>Alias</th>
+            <th>Actions</th>
+        </tr>
+        {% for myfriend in myfriends %}
+        <tr>
+            <td>{{myfriend.alias}}</td>
+            <td><a href='/friends/profile/{{myfriend.id}}'>View profile</a></td>
+            <td><a href='/friends/remove/{{myfriend.id}}'>Remove from friends</a></td>
+        </tr>
+        {% endfor %}
+    <!-- Otherwise, displays the following: -->
+    {% else %}
+    <p>You don't have friends yet!</p>
+    {% endif %}
+    </table>
+    <!-- Displays users not currently on your friends list, if any -->
+    {% if nonfriends %}
+    <p>Here are some users you may want to add:</p>
+    <table>
+        <tr>
+            <th>Alias</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in nonfriends %}
+        <tr>
+            <td><a href='/friends/profile/{{user.id}}'>{{user.alias}}</a></td>
+            <td><a href='/friends/add/{{user.id}}'>Add as friend</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <!-- Displays dumb message if you're friends with everyone -->
+    {% else %}
+    <p>And when {{user.alias}} saw the breadth of his domain, he wept for there were no more friends to add.</p>
+    {% endif %}
+    <p><a href='/friends/profile/{{user.id}}'>View your profile</a></p>
+</body>
+</html>

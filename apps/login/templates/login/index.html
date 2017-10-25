@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login/Register</title>
+    <style>
+    .panel{
+        padding: 10px;
+        display: inline-block;
+        vertical-align: top;
+        width: 300px;
+        border: solid black 1px;
+        height: 450px;
+    }    
+    </style>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <div class='panel'>
+        <h2>Register</h2>
+        <form action='/register' method='post'>
+            {%csrf_token%}
+            First Name: <input type='text' name='name'><br>
+            Alias: <input type='text' name='alias'><br>
+            Email: <input type='email' name='email'><br>
+            Password: <input type='password' name='password'><br>
+            (Password should be at least 8 characters)<br>
+            Confirm Password: <input type='password' name='confirmpw'><br>
+            Date of Birth: <input type='date' name='dob'><br>
+            <input type='submit' value='Register'>
+        </form>
+        {% for message in messages %}
+            {% if 'reg' in message.tags %}
+                <p>{{message}}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class='panel'>
+        <h2>Login</h2>
+        <form action='/login' method='post'>
+            {%csrf_token%}
+            Email: <input type="text" name='email'><br>
+            Password: <input type='password' name='password'><br>
+            <input type='submit' value='Login'>
+        </form>
+        {% for message in messages %}
+        {% if 'login' in message.tags %}
+            <p>{{message}}</p>
+        {% endif %}
+    {% endfor %}
+    </div>
+</body>
+</html>

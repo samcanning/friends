@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{friend.alias}}</title>
+</head>
+<body>
+    <!-- Displays only name and email address if user is viewing own profile (this could probably have been done as a separate html file but ehh) -->
+    {% if friend == user %}
+    <p><a href='/friends'>Home</a> | <a href='/logout'>Logout</a></p>
+    <h1>Your profile</h1>
+    <p>Name: {{user.name}}</p>
+    <p>Email address: {{user.email}}</p>
+    <!-- Displays normal user profile if user is logged in -->
+    {% elif request.session.logged == True %}
+    <p><a href='/friends'>Home</a> | <a href='/logout'>Logout</a></p>
+    <h1>{{friend.alias}}'s profile</h1>
+        {% if friend in yourfriends %}
+        <p>Name: {{friend.name}}</p>
+        <p>Email address: {{friend.email}}</p>
+        <p>You're friends!</p>
+        {% else %}
+        <p>To see {{friend.alias}}'s information, add them as a friend.</p>
+        <p><a href='/friends/add/{{friend.id}}/redirect'>Add this user</a></p>
+        {% endif %}
+    <!-- If user is not logged in, only displays user alias and link to login/registration page -->
+    {% else %}
+        <h1>{{friend.alias}}'s profile</h1>
+        <p>To see {{friend.alias}}'s information, please <a href='/'>log in or register</a> for an account now.</p>
+    {% endif %}
+</body>
+</html>
